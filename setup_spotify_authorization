@@ -1,0 +1,24 @@
+Spotify allows users to access their web API for free, but you will need to register a Spotify app. 
+This process is super easy and fast, and you can sign up using this link: https://developer.spotify.com/
+
+Once you have done that, go to the developer dashboard and click on 'Create an App.' 
+You can go ahead and add a name, don't worry about details, this will pretty much be a placeholder.
+
+I use the Spotify python library spotipy for my code: https://spotipy.readthedocs.io/en/2.12.0/#
+
+Authorization requires you to set up a token: spotify = spotipy.Spotify(auth = token).
+The token requires 5 parameters: a username, scope, client_id, client_secret_id, and a redirect_uri.
+
+The username is just your Spotify login username. 
+The scope is relatively unimportant for this project, so you can use the default one I put in my code.
+If you are interested in learning more, you can check it out using this link: https://developer.spotify.com/documentation/general/guides/scopes/
+The client id and client secret id come from the app you created earlier. Once you have clicked into the app, you will find them
+both in the panel under your app's name.
+To access the Spotify API, you need permission from a least one user, luckily that user can be yourself; this is where the redirect URI comes in.
+You need to provide a link within your app; it doesn't have to be a proper link so you can use the default link I put in my code.
+To add the link, click on 'Edit Settings' and add the link under 'Redirect URIs.'
+
+Now you have all you need to fill in the credentials from the code.
+
+One thing to note, if you are not running all the code at once, the access token has an expiration period. (typically around an hour)
+Spotify provides a refresh token, so if your original token expires, you can rerun the #set up authorization lines, and your app will request a new one.
