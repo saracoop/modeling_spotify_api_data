@@ -53,7 +53,7 @@ while playlist['next']:
 	for x in playlist['items']:
 		bList.append(x['track']['name'])
 #write list to csv in row form
-outfile1 = open('.../names.csv','w')
+outfile1 = open('.../names.csv','w') #replace '...' with where you want the file to save
 out = csv.writer(outfile1)
 out.writerows(map(lambda x: [x], bList))
 outfile1.close()
@@ -81,7 +81,7 @@ while playlist['next']:
 	for x in playlist['items']:
 		dList.append(x['track']['popularity'])
 #write list to a csv in row form
-outfile2 = open('.../measures.csv','w')
+outfile2 = open('.../measures.csv','w') #replace '...' with where you want the file to save
 out = csv.writer(outfile2)
 out.writerows(map(lambda x: [x], dList))
 outfile2.close()
@@ -94,7 +94,7 @@ for id in aList:
 	song = spotify.track(id)
 	eList.append(song['album']['name'])
 #write list to csv in row form
-outfile3 = open('.../albums.csv','w')
+outfile3 = open('.../albums.csv','w') #replace '...' with where you want the file to save
 out = csv.writer(outfile3)
 out.writerows(map(lambda x: [x], eList))
 outfile3.close()
@@ -110,7 +110,7 @@ for url in range(len(cList)):
 #copy paste name(A), popularity measure(B), and album name(C) cols into one file
 #create a col(D) for image pathway without first '/'' : .../AlbumArt/images
 #create a col(E) for the image type: .jpg
-#concatenate cols to make album art pathway col(F) : =CONCATENATE(C2,A2,D2)
+#concatenate cols to make album art pathway col(F) : =CONCATENATE(D2,A2,E2)
 #copy col F and paste only values into col G
-#delete cols D,D,F
+#delete cols D,E,F
 #zip the finished csv with the images folder and then upload zip to datarobot
