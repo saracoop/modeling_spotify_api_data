@@ -1,4 +1,4 @@
-# using_spotify_api
+# modeling_spotify_api_data
 
 I started this project because I was interested in the relationship between an album and its cover art. A record's cover plays a massive role in categorizing and 
 placing an artist's work into a musical context. The artwork serves as a meaningful visual representation of sound and gives the listener an idea of what to 
