@@ -1,0 +1,103 @@
+#import necessary libaries
+import spotipy
+import spotipy.util as util
+import csv
+import requests
+import shutil
+import urllib.request
+
+#setup authorization(more information on this in the setup authorization file)
+username = 'YOUR_SPOTIFY_USERNAME'
+client_id ='YOUR_SPOTIFY_CLIENT_ID'
+client_secret = 'YOUR_SPOTIFY_CLIENT_SECRET_ID'
+redirect_uri = 'http://localhost:7778/callback' 
+scope = 'user-library-read'
+
+token = util.prompt_for_user_token(username = username, 
+                                   scope = scope, 
+                                   client_id = client_id,   
+                                   client_secret = client_secret,     
+                                   redirect_uri = redirect_uri)
+
+spotify = spotipy.Spotify(auth = token)
+
+#chose playlist of songs
+playlist = spotify.playlist_tracks(playlist_id = 'YOUR_PLAYLIST_ID')
+
+
+#create list for track ids
+aList = []
+#add the id of each song in the playlist
+for x in playlist['items']:
+    	aList.append(x['track']['id'])
+
+#if there are over 100 songs in the playlist run this:
+while playlist['next']:
+	#move to next 100 songs
+	playlist = spotify.next(playlist)
+	for x in playlist['items']:
+		aList.append(x['track']['id'])
+
+
+#create list for track names
+bList = []
+#reset the playlist
+playlist = spotify.playlist_tracks(playlist_id = 'YOUR_PLAYLIST_ID')
+#add the name of each song in the playlist
+for x in playlist['items']:
+	bList.append(x['track']['name'])
+#if there are over 100 songs in the playlist run this:
+while playlist['next']:
+	#move to next 100 songs
+	playlist = spotify.next(playlist)
+	for x in playlist['items']:
+		bList.append(x['track']['name'])
+#write list to csv in row form
+outfile1 = open('.../names.csv','w')
+out = csv.writer(outfile1)
+out.writerows(map(lambda x: [x], bList))
+outfile1.close()
+
+
+#create a list of album art URLs
+cList = []
+#for each song id grab the album image
+for id in aList:
+	song = spotify.track(id)
+	cList.append(song['album']['images'][0]['url'])
+
+
+#create a list for popularity measures
+dList = []
+#reset the playlist
+playlist = spotify.playlist_tracks(playlist_id = 'YOUR_PLAYLIST_ID')
+#add the measure of each song in the playlist
+for x in playlist['items']:
+	dList.append(x['track']['popularity'])
+#if there are over 100 songs in the playlist run this:
+while playlist['next']:
+	#move to next 100 songs
+	playlist = spotify.next(playlist)
+	for x in playlist['items']:
+		dList.append(x['track']['popularity'])
+#write list to a csv in row form
+outfile2 = open('.../measures.csv','w')
+out = csv.writer(outfile2)
+out.writerows(map(lambda x: [x], dList))
+outfile2.close()
+
+
+#download images and save as the song name
+for url in range(len(cList)):
+    urllib.request.urlretrieve(cList[url], 
+      "/.../AlbumArt/images/{}.jpg".format(bList[url]))
+      
+ 
+#steps I took to get data upload ready
+#copy paste name(A), popularity measure(B), and album name(C) cols into one file
+#create a col(D) for image pathway without first '/'' : .../AlbumArt/images
+#create a col(E) for the image type: .jpg
+#concatenate cols to make album art pathway col(F) : =CONCATENATE(C2,A2,D2)
+#copy col F and paste only values into col G
+#delete cols D,D,F
+#zip the finished csv with the images folder and then upload zip to datarobot
