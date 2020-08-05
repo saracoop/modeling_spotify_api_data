@@ -87,6 +87,19 @@ out.writerows(map(lambda x: [x], dList))
 outfile2.close()
 
 
+#create list for album names
+eList = []
+#for each song id grab the album name
+for id in aList:
+	song = spotify.track(id)
+	eList.append(song['album']['name'])
+#write list to csv in row form
+outfile3 = open('.../albums.csv','w')
+out = csv.writer(outfile3)
+out.writerows(map(lambda x: [x], eList))
+outfile3.close()
+
+
 #download images and save as the song name
 for url in range(len(cList)):
     urllib.request.urlretrieve(cList[url], 
