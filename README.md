@@ -7,3 +7,5 @@ can potentially affect a listener's perception of the music. I believe that musi
 feelings and emotions. This relationship leads to the idea of aesthetics as an essential factor for music discovery. Visual information may improve the efficiency 
 of the search process; it takes a lot less time browsing through a collection of images than listening to clips of songs, and the aesthetics of the multi-sensory 
 experience.
+
+As a starting place, I was curious whether I could build a Visual AI model that could accurately predict an album's genre or popularity measure. 
